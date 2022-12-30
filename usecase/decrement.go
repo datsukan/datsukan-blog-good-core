@@ -9,8 +9,8 @@ import (
 	"github.com/guregu/dynamo"
 )
 
-// Increment は、指定した記事のいいね数をインクリメント（+1）する。
-func Increment(articleID string) (int, error) {
+// Decrement は、指定した記事のいいね数をデクリメント（-1）する。
+func Decrement(articleID string) (int, error) {
 	db := pkg.NewDynamoDBClient()
 	r := repoif.BlogGoodRepository(repo.NewBlogGoodRepository(db))
 
@@ -21,7 +21,7 @@ func Increment(articleID string) (int, error) {
 
 	// レコードが存在する場合。
 	if bg != nil {
-		bg, err := r.Add(articleID, 1)
+		bg, err := r.Subtract(articleID, 1)
 		if err != nil {
 			return 0, err
 		}
@@ -31,7 +31,7 @@ func Increment(articleID string) (int, error) {
 	}
 
 	// レコードが存在しない場合。
-	rbg, err := r.Create(articleID, 1)
+	rbg, err := r.Create(articleID, 0)
 	if err != nil {
 		return 0, err
 	}

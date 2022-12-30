@@ -68,6 +68,18 @@ func (r *BlogGoodRepository) Add(articleID string, amount int) (*model.BlogGood,
 	return &b, nil
 }
 
+// Subtract は、いいね数を減算する。
+func (r *BlogGoodRepository) Subtract(articleID string, amount int) (*model.BlogGood, error) {
+	var b model.BlogGood
+	err := r.Table.Update("ArticleID", articleID).Add("Amount", -amount).Value(&b)
+	if err != nil {
+		fmt.Printf("Failed to subtract item[%v]\n", err)
+		return nil, err
+	}
+
+	return &b, nil
+}
+
 // Delete は、いいね数のレコードを削除する。
 func (r *BlogGoodRepository) Delete(articleID string) error {
 	err := r.Table.Delete("ArticleID", articleID).Run()

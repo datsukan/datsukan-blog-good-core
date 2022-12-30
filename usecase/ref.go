@@ -10,19 +10,19 @@ import (
 )
 
 // Ref は、指定した記事のいいね数を参照する。
-func Ref(articleID string) error {
+func Ref(articleID string) (int, error) {
 	db := pkg.NewDynamoDBClient()
-	repo := repoif.BlogGoodRepository(repo.NewBlogGoodRepository(db))
+	r := repoif.BlogGoodRepository(repo.NewBlogGoodRepository(db))
 
-	bg, err := repo.Read(articleID)
+	bg, err := r.Read(articleID)
 	if err != nil && err != dynamo.ErrNotFound {
-		return err
+		return 0, err
 	}
 	if bg == nil {
 		fmt.Println("not found")
-		return nil
+		return 0, nil
 	}
 
 	fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
-	return nil
+	return bg.Amount, nil
 }

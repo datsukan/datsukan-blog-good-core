@@ -8,5 +8,6 @@ type BlogGoodRepository interface {
 	Create(articleID string, amount int) (*model.BlogGood, error)
 	Update(articleID string, amount int) (*model.BlogGood, error)
 	Add(articleID string, amount int) (*model.BlogGood, error)
+	Subtract(articleID string, amount int) (*model.BlogGood, error)
 	Delete(articleID string) error
 }
