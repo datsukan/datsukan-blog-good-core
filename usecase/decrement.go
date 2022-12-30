@@ -3,6 +3,7 @@ package usecase
 import (
 	"fmt"
 
+	"github.com/datsukan/datsukan-blog-good-core/model"
 	"github.com/datsukan/datsukan-blog-good-core/pkg"
 	"github.com/datsukan/datsukan-blog-good-core/repo"
 	"github.com/datsukan/datsukan-blog-good-core/repoif"
@@ -21,13 +22,26 @@ func Decrement(articleID string) (int, error) {
 
 	// レコードが存在する場合。
 	if bg != nil {
-		bg, err := r.Subtract(articleID, 1)
-		if err != nil {
-			return 0, err
+		if bg.Amount == 0 {
+			fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
+			return bg.Amount, nil
 		}
 
-		fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
-		return bg.Amount, nil
+		var rbg *model.BlogGood
+		if bg.Amount < 0 {
+			rbg, err = r.Update(articleID, 0)
+			if err != nil {
+				return 0, err
+			}
+		} else {
+			rbg, err = r.Subtract(articleID, 1)
+			if err != nil {
+				return 0, err
+			}
+		}
+
+		fmt.Printf("ArticleID: %s, Amount: %d\n", rbg.ArticleID, rbg.Amount)
+		return rbg.Amount, nil
 	}
 
 	// レコードが存在しない場合。
