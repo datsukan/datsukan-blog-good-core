@@ -13,8 +13,17 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository:
-            - datsukan/datsukan-blog-good-ref
-            - datsukan/datsukan-blog-good-increment
-            - datsukan/datsukan-blog-good-decrement
+          repository: datsukan/datsukan-blog-good-ref
+          event-type: deploy
+      - name: Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: datsukan/datsukan-blog-good-increment
+          event-type: deploy
+      - name: Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: datsukan/datsukan-blog-good-decrement
           event-type: deploy
