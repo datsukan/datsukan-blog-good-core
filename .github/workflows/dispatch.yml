@@ -10,19 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: datsukan/datsukan-blog-good-ref
           event-type: deploy
       - name: Dispatch
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: datsukan/datsukan-blog-good-increment
           event-type: deploy
       - name: Dispatch
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: datsukan/datsukan-blog-good-decrement
