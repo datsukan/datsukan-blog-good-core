@@ -24,5 +24,5 @@ func Ref(articleID string) (int, error) {
 	}
 
 	fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
-	return bg.Amount + 1000, nil
+	return bg.Amount + 100, nil
 }
