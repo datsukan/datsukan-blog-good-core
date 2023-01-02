@@ -51,5 +51,5 @@ func Decrement(articleID string) (int, error) {
 	}
 
 	fmt.Printf("ArticleID: %s, Amount: %d\n", rbg.ArticleID, rbg.Amount)
-	return rbg.Amount + 200, nil
+	return rbg.Amount, nil
 }
