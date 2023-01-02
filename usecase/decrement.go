@@ -20,34 +20,34 @@ func Decrement(articleID string) (int, error) {
 		return 0, err
 	}
 
-	// レコードが存在する場合。
-	if bg != nil {
-		if bg.Amount == 0 {
-			fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
-			return bg.Amount, nil
-		}
-
-		var rbg *model.BlogGood
-		if bg.Amount < 0 {
-			rbg, err = r.Update(articleID, 0)
-			if err != nil {
-				return 0, err
-			}
-		} else {
-			rbg, err = r.Subtract(articleID, 1)
-			if err != nil {
-				return 0, err
-			}
+	// レコードが存在しない場合。
+	if bg == nil {
+		rbg, err := r.Create(articleID, 0)
+		if err != nil {
+			return 0, err
 		}
 
 		fmt.Printf("ArticleID: %s, Amount: %d\n", rbg.ArticleID, rbg.Amount)
 		return rbg.Amount, nil
 	}
 
-	// レコードが存在しない場合。
-	rbg, err := r.Create(articleID, 0)
-	if err != nil {
-		return 0, err
+	// レコードが存在する場合。
+	if bg.Amount == 0 {
+		fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
+		return bg.Amount, nil
+	}
+
+	var rbg *model.BlogGood
+	if bg.Amount < 0 {
+		rbg, err = r.Update(articleID, 0)
+		if err != nil {
+			return 0, err
+		}
+	} else {
+		rbg, err = r.Subtract(articleID, 1)
+		if err != nil {
+			return 0, err
+		}
 	}
 
 	fmt.Printf("ArticleID: %s, Amount: %d\n", rbg.ArticleID, rbg.Amount)

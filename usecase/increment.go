@@ -19,19 +19,19 @@ func Increment(articleID string) (int, error) {
 		return 0, err
 	}
 
-	// レコードが存在する場合。
-	if bg != nil {
-		bg, err := r.Add(articleID, 1)
+	// レコードが存在しない場合。
+	if bg == nil {
+		rbg, err := r.Create(articleID, 1)
 		if err != nil {
 			return 0, err
 		}
 
-		fmt.Printf("ArticleID: %s, Amount: %d\n", bg.ArticleID, bg.Amount)
-		return bg.Amount, nil
+		fmt.Printf("ArticleID: %s, Amount: %d\n", rbg.ArticleID, rbg.Amount)
+		return rbg.Amount, nil
 	}
 
-	// レコードが存在しない場合。
-	rbg, err := r.Create(articleID, 1)
+	// レコードが存在する場合。
+	rbg, err := r.Add(articleID, 1)
 	if err != nil {
 		return 0, err
 	}
