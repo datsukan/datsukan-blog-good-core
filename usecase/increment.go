@@ -70,6 +70,7 @@ func noticeEnqueue(articleID string) {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println("notification successful")
 }
 
 func newSQSClient() *sqs.SQS {
