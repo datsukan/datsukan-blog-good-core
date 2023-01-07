@@ -53,6 +53,7 @@ func Increment(articleID string) (int, error) {
 	return rbg.Amount, nil
 }
 
+// noticeEnqueue は、通知用のSQSにメッセージを追加する。
 func noticeEnqueue(articleID string) {
 	queueURL := os.Getenv("QUEUE_URL")
 	sqsSvc := newSQSClient()
@@ -75,6 +76,7 @@ func noticeEnqueue(articleID string) {
 	fmt.Println("notification successful")
 }
 
+// newSQSClient は、SQSのクライアントインスタンスを生成する。
 func newSQSClient() *sqs.SQS {
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("ap-northeast-1"),
