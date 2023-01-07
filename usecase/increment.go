@@ -35,6 +35,8 @@ func Increment(articleID string) (int, error) {
 			return 0, err
 		}
 
+		noticeEnqueue(articleID)
+
 		fmt.Printf("ArticleID: %s, Amount: %d\n", rbg.ArticleID, rbg.Amount)
 		return rbg.Amount, nil
 	}
